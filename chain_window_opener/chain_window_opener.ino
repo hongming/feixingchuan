@@ -68,6 +68,9 @@ void cmdVccOffA();
 void cmdCloseB();
 void cmdOpenB();
 void cmdVccOffB();
+void cmdCloseAB();
+void cmdOpenAB();
+void comVccOffAB();
 
 void setup()
 {
@@ -127,8 +130,22 @@ void setup()
     term.addCommand("opena", cmdOpenA);
     term.addCommand("cuta", cmdVccOffA);
     term.addCommand("closeb", cmdCloseB);
-    term.addCommand("opena", cmdOpenB);
+    term.addCommand("openb", cmdOpenB);
     term.addCommand("cutb", cmdVccOffB);
+    term.addCommand("closeab", cmdCloseAB);
+    term.addCommand("openab", cmdOpenAB);
+    term.addCommand("cutab", cmdVccOffAB);
+
+    // Default status:TSA A & B ALL POWER OFF.
+    digitalWrite(A_K1_PIN, HIGH);
+    digitalWrite(A_K2_PIN, HIGH);
+    digitalWrite(A_SW1_PIN, LOW);
+    digitalWrite(A_SW2_PIN, LOW);
+    digitalWrite(B_K1_PIN, HIGH);
+    digitalWrite(B_K2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, LOW);
+    digitalWrite(B_SW2_PIN, LOW);
+    Serial.println(F("@A & @B Panel READY!"));
 }
 
 void loop()
@@ -151,6 +168,9 @@ void cmdHelp()
     Serial.println(F("  help or ?          Print this usage"));
     Serial.println(F("  on                 Turn LED on"));
     Serial.println(F("  off                Turn LED off"));
+    Serial.println(F("  closeab                Close @A &@B Panel"));
+    Serial.println(F("  openab                Open @A & @B Panel"));
+    Serial.println(F("  cutab                Power OFF @A & @B Panel"));
     Serial.println(F("  closea                Close @A Panel"));
     Serial.println(F("  opena                Open @A Panel"));
     Serial.println(F("  cuta                Power OFF @A Panel"));
@@ -183,7 +203,7 @@ void cmdCloseA()
     //Close @A Panel
     digitalWrite(A_SW1_PIN, HIGH);
     digitalWrite(A_SW2_PIN, HIGH);
-    delay(1000);
+    delay(500);
     Serial.println(F("Close @A Panel"));
     digitalWrite(A_K1_PIN, LOW);
     digitalWrite(A_K2_PIN, HIGH);
@@ -195,7 +215,7 @@ void cmdOpenA()
     //Open @A Panel
     digitalWrite(A_SW1_PIN, HIGH);
     digitalWrite(A_SW2_PIN, HIGH);
-    delay(1000);
+    delay(500);
     Serial.println(F("Open @A Panel"));
     digitalWrite(A_K1_PIN, HIGH);
     digitalWrite(A_K2_PIN, LOW);
@@ -217,6 +237,7 @@ void cmdCloseB()
     //Close @B Panel
     digitalWrite(B_SW1_PIN, HIGH);
     digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
     Serial.println(F("Close @B Panel"));
     digitalWrite(B_K1_PIN, LOW);
     digitalWrite(B_K2_PIN, HIGH);
@@ -228,6 +249,7 @@ void cmdOpenB()
     //Open @B Panel
     digitalWrite(B_SW1_PIN, HIGH);
     digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
     Serial.println(F("Open @B Panel"));
     digitalWrite(B_K1_PIN, HIGH);
     digitalWrite(B_K2_PIN, LOW);
@@ -235,8 +257,54 @@ void cmdOpenB()
 
 void cmdVccOffB()
 {
-    //Open @A Panel
+    //Open @B Panel
     Serial.println(F("Power OFF @B Panel"));
+    digitalWrite(B_K1_PIN, HIGH);
+    digitalWrite(B_K2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, LOW);
+    digitalWrite(B_SW2_PIN, LOW);
+}
+
+
+void cmdCloseAB()
+{
+    //Close @A & @B Panel
+    digitalWrite(A_SW1_PIN, HIGH);
+    digitalWrite(A_SW2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, HIGH);
+    digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
+    Serial.println(F("Close @A & @B Panel"));
+    digitalWrite(A_K1_PIN, LOW);
+    digitalWrite(A_K2_PIN, HIGH);
+    digitalWrite(B_K1_PIN, LOW);
+    digitalWrite(B_K2_PIN, HIGH);
+}
+
+
+void cmdOpenAB()
+{
+    //Open @A & @B Panel
+    digitalWrite(A_SW1_PIN, HIGH);
+    digitalWrite(A_SW2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, HIGH);
+    digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
+    Serial.println(F("Open @A & @B Panel"));
+    digitalWrite(A_K1_PIN, HIGH);
+    digitalWrite(A_K2_PIN, LOW);
+    digitalWrite(B_K1_PIN, HIGH);
+    digitalWrite(B_K2_PIN, LOW);
+}
+
+void cmdVccOffAB()
+{
+    //Cut off Power @A & @B Panel
+    Serial.println(F("Power OFF @A & @B Panel"));
+    digitalWrite(A_K1_PIN, HIGH);
+    digitalWrite(A_K2_PIN, HIGH);
+    digitalWrite(A_SW1_PIN, LOW);
+    digitalWrite(A_SW2_PIN, LOW);
     digitalWrite(B_K1_PIN, HIGH);
     digitalWrite(B_K2_PIN, HIGH);
     digitalWrite(B_SW1_PIN, LOW);
