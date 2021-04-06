@@ -71,6 +71,8 @@ void cmdVccOffB();
 void cmdCloseAB();
 void cmdOpenAB();
 void comVccOffAB();
+void cmdCloseAOpenB();
+void cmdOpenACloseB();
 
 void setup()
 {
@@ -134,6 +136,8 @@ void setup()
     term.addCommand("cutb", cmdVccOffB);
     term.addCommand("closeab", cmdCloseAB);
     term.addCommand("openab", cmdOpenAB);
+    term.addCommand("caob", cmdCloseAOpenB);
+    term.addCommand("oacb", cmdOpenACloseB);
     term.addCommand("cutab", cmdVccOffAB);
 
     // Default status:TSA A & B ALL POWER OFF.
@@ -177,6 +181,8 @@ void cmdHelp()
     Serial.println(F("  closeb                Close @B Panel"));
     Serial.println(F("  openb                Open @B Panel"));
     Serial.println(F("  cutb                Power OFF @B Panel"));
+    Serial.println(F("  caob                Close @A and Open @B Panel"));
+    Serial.println(F("  oacb                Open @A and Close @B Panel"));
     Serial.println(F("  hello [name] [age] Print your name and age"));
     Serial.println(F("  s <arg 1>..<arg N> Print string arguments"));
     Serial.println(F("  i <arg>            Print decimal or hex argument"));
@@ -205,8 +211,8 @@ void cmdCloseA()
     digitalWrite(A_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Close @A Panel"));
-    digitalWrite(A_K1_PIN, LOW);
-    digitalWrite(A_K2_PIN, HIGH);
+    digitalWrite(A_K1_PIN, HIGH);
+    digitalWrite(A_K2_PIN, LOW);
 
 }
 
@@ -217,8 +223,8 @@ void cmdOpenA()
     digitalWrite(A_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Open @A Panel"));
-    digitalWrite(A_K1_PIN, HIGH);
-    digitalWrite(A_K2_PIN, LOW);
+    digitalWrite(A_K1_PIN, LOW);
+    digitalWrite(A_K2_PIN, HIGH);
 
 }
 
@@ -239,8 +245,8 @@ void cmdCloseB()
     digitalWrite(B_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Close @B Panel"));
-    digitalWrite(B_K1_PIN, LOW);
-    digitalWrite(B_K2_PIN, HIGH);
+    digitalWrite(B_K1_PIN, HIGH);
+    digitalWrite(B_K2_PIN, LOW);
 }
 
 
@@ -251,8 +257,8 @@ void cmdOpenB()
     digitalWrite(B_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Open @B Panel"));
-    digitalWrite(B_K1_PIN, HIGH);
-    digitalWrite(B_K2_PIN, LOW);
+    digitalWrite(B_K1_PIN, LOW);
+    digitalWrite(B_K2_PIN, HIGH);
 }
 
 void cmdVccOffB()
@@ -275,10 +281,10 @@ void cmdCloseAB()
     digitalWrite(B_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Close @A & @B Panel"));
-    digitalWrite(A_K1_PIN, LOW);
-    digitalWrite(A_K2_PIN, HIGH);
-    digitalWrite(B_K1_PIN, LOW);
-    digitalWrite(B_K2_PIN, HIGH);
+    digitalWrite(A_K1_PIN, HIGH);
+    digitalWrite(A_K2_PIN, LOW);
+    digitalWrite(B_K1_PIN, HIGH);
+    digitalWrite(B_K2_PIN, LOW);
 }
 
 
@@ -291,8 +297,39 @@ void cmdOpenAB()
     digitalWrite(B_SW2_PIN, HIGH);
     delay(500);
     Serial.println(F("Open @A & @B Panel"));
+    digitalWrite(A_K1_PIN, LOW);
+    digitalWrite(A_K2_PIN, HIGH);
+    digitalWrite(B_K1_PIN, LOW);
+    digitalWrite(B_K2_PIN, HIGH);
+}
+
+
+void cmdCloseAOpenB()
+{
+    //Close @A Panel & Open @B Panel
+    digitalWrite(A_SW1_PIN, HIGH);
+    digitalWrite(A_SW2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, HIGH);
+    digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
+    Serial.println(F("Close @A Panel & Open @B Panel"));
     digitalWrite(A_K1_PIN, HIGH);
     digitalWrite(A_K2_PIN, LOW);
+    digitalWrite(B_K1_PIN, LOW);
+    digitalWrite(B_K2_PIN, HIGH);
+}
+
+void cmdOpenACloseB()
+{
+    //Open @A Panel & Close @B Panel
+    digitalWrite(A_SW1_PIN, HIGH);
+    digitalWrite(A_SW2_PIN, HIGH);
+    digitalWrite(B_SW1_PIN, HIGH);
+    digitalWrite(B_SW2_PIN, HIGH);
+    delay(500);
+    Serial.println(F("Open @A Panel & Close @B Panel"));
+    digitalWrite(A_K1_PIN, LOW);
+    digitalWrite(A_K2_PIN, HIGH);
     digitalWrite(B_K1_PIN, HIGH);
     digitalWrite(B_K2_PIN, LOW);
 }
