@@ -80,6 +80,57 @@ for (i = [[main_frame_width / 2, 0, E2040_width],
   extrusion(E2020, main_frame_height - 2 * E2020_width, center = false);
 }
 
+////主体框架-立柱-增加一个安全门
+for (i = 
+          [[main_frame_width / 2-100, main_frame_length - E2020_width, E2040_width],          
+           [main_frame_width / 2-600, main_frame_length - E2020_width, E2040_width] ])         //增加一个安全门
+  
+{
+  translate(i)
+   color("orange")
+  extrusion(E2020, main_frame_height - 2 * E2020_width, center = false);
+}
+for (i = 
+         [ [main_frame_width / 2-100-E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width,],          //增加一个安全门
+          [main_frame_width / 2-600+E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width,]  ] )   //增加一个安全门
+{
+  translate(i){
+    color("red")
+  extrusion(E2020, main_frame_height - 12 * E2020_width, center = false);    }
+}
+//把手
+for (i = 
+         [ 
+          [main_frame_width / 2-600+E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width]  ] )   //增加一个安全门
+{
+  translate(i){
+    translate([0,E2020_width*3,600]){
+      rotate([0,90,270]){import("handle.stl");}}
+    }
+}
+for (i = 
+         [ [main_frame_width / 2-100-E2020_width-E2020_width/2, main_frame_length - E2020_width, E2040_width+10*E2020_width+E2020_width/2],
+         [main_frame_width / 2-100-E2020_width-E2020_width/2, main_frame_length - E2020_width, main_frame_height-E2020_width*1.5] ] )   //增加一个安全门
+{
+
+  translate(i){
+  rotate([0,-90,0]){
+  color("red")
+  extrusion(E2020, 500-3*E2020_width, center = false);
+
+  }}
+}
+//下方横档
+for (i = 
+         [ [main_frame_width / 2-100-E2020_width-E2020_width/2+E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width-E2020_width/2]] )   //增加一个安全门
+{
+
+  translate(i)
+  rotate([0,-90,0]){
+    color("orange")
+  extrusion(E2020, 500-E2020_width, center = false);}
+}
+
 ////框架外置物台
 for (i = [[200, -E2040_height - 500, E2040_width]
 
