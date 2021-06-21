@@ -41,8 +41,8 @@ v_plate_thickness = 10; //卡在缝隙间的厚度
 v_plate_width = 65.5;//面板长宽
 
 //主体框架
-main_frame_width = 1500;
-main_frame_length = 1500;
+main_frame_width = 1540;
+main_frame_length = 1540;
 main_frame_height = 1200;
 
 //顶部盖子
@@ -382,10 +382,11 @@ for (i = [[0, 0, 0]])
 {
   translate(i) {
     rotate([0, 90, 0]) {
-      translate([-E2020_width / 2, -E2020_width / 2, E2020_width / 2 + 10]) {
+      translate([-E2020_width / 2, -E2020_width / 2, E2020_width / 2 ]) {
         //两边各留出1厘米用于通风
+        //2021-06-21，这里存在沟通误差，取消此缝隙，改为上盖
         color("grey") {
-          extrusion(E2040, main_frame_width - 2 * E2040_width - 20, center = false);
+          extrusion(E2040, main_frame_width - 2 * E2040_width , center = false);
         }
       }
     }
@@ -1008,7 +1009,7 @@ rotate([90,0,0]){
       }
       
       ////顶部盖子-左侧45度斜杆右侧的横杆
-      translate([main_frame_width / 2 - 5 * E2020_width - E2020_width / 2, -E2040_height - v_plate_thickness, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
+      translate([main_frame_width / 2 - 6 * E2020_width - E2020_width / 2, -E2040_height - v_plate_thickness, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
 
 import("extrusion_2020_cover_45.stl");
         // rotate([0, 90, 0]) {
