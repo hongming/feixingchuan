@@ -1,29 +1,24 @@
-/*
-  2021-06-08
-  搞定
-  -底部全部改为20*40厘米
-  -立柱底部横杆上边，不直接到底
-  -底部连接处留1厘米空隙用于通风透气
-  -增加两根1.2米高的立柱，在外侧，相距50厘米，未来放置全天相机、雨雪检测器等
-  -顶盖中间横杆改用20*40结构
-  2021-06-11
-  -顶部改为高低搭配、互锁防水
-  -顶盖下方延长3厘米
-
-  待办
-  --重要：连接开窗器的pink横杆，中间镂空，这样上下移动不会挡住；或者改为两个竖立的20*40杆
-  -立柱+顶部方变为1厘米
-  -开窗器侧面增加盖板，8厘米空间
-  -底部增加脚垫
-  -顶盖改为平-135度-平结构
-  -连接处尽量使用T型和L型外置连接板
-
-  2021-06-13
-  -升降机放在上边
-  -横杆-135度连接件-横杆，一共4组
-  -互锁结构采用两个L型
-*/
-
+    /*
+    2021-06-08
+    -底部全部改为20*40厘米
+    -立柱底部横杆上边，不直接到底
+    -顶盖连接处留1厘米空隙用于通风透气 -增加两根1.2米高的立柱，在外侧，相距50厘米，未来放置全天相机、雨雪检测器等
+    -顶盖中间横杆改用20*40结构
+    2021-06-11
+    -顶部改为高低搭配、互锁防水
+    -顶盖下方延长3厘米 -重要：连接开窗器的pink横杆，中间镂空，这样上下移动不会挡住；或者改为两个竖立的20*40杆
+    -立柱+顶部方变为1厘米
+    -开窗器侧面增加盖板，8厘米空间
+    -底部增加脚垫
+    -顶盖改为平-135度-平结构
+    -连接处尽量使用T型和L型外置连接板
+    2021-06-13
+    -升降机放在上边
+    -横杆-135度连接件-横杆，一共4组
+    -互锁结构采用两个L型
+    2021-06-24
+    -增加BOM配件列表
+    */
 
 include <NopSCADlib/lib.scad>
 include <Connector_2040_L.scad>
@@ -70,7 +65,8 @@ for (i = [[0, -(E2040_height - E2040_width) / 2, E2040_width],
 for (i = [[main_frame_width / 2, 0, E2040_width],
           [main_frame_width - E2020_width, main_frame_length / 2 - 300, E2040_width],
           [main_frame_width - E2020_width, main_frame_length / 2 + 300, E2040_width],
-          [main_frame_width / 2, main_frame_length - E2020_width, E2040_width],
+          [200, main_frame_length - E2020_width, E2040_width],
+          [main_frame_width -200, main_frame_length - E2020_width, E2040_width],
           [0, main_frame_length / 2 - 300, E2040_width],
           [0, main_frame_length / 2 + 300, E2040_width]
 
@@ -81,23 +77,7 @@ for (i = [[main_frame_width / 2, 0, E2040_width],
 }
 
 ////主体框架-立柱-增加一个安全门
-for (i = 
-          [[main_frame_width / 2-100, main_frame_length - E2020_width, E2040_width],          
-           [main_frame_width / 2-600, main_frame_length - E2020_width, E2040_width] ])         //增加一个安全门
-  
-{
-  translate(i)
-   color("orange")
-  extrusion(E2020, main_frame_height - 2 * E2020_width, center = false);
-}
-for (i = 
-         [ [main_frame_width / 2-100-E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width,],          //增加一个安全门
-          [main_frame_width / 2-600+E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width,]  ] )   //增加一个安全门
-{
-  translate(i){
-    color("red")
-  extrusion(E2020, main_frame_height - 12 * E2020_width, center = false);    }
-}
+
 //把手
 for (i = 
          [ 
@@ -108,28 +88,8 @@ for (i =
       rotate([0,90,270]){import("handle.stl");}}
     }
 }
-for (i = 
-         [ [main_frame_width / 2-100-E2020_width-E2020_width/2, main_frame_length - E2020_width, E2040_width+10*E2020_width+E2020_width/2],
-         [main_frame_width / 2-100-E2020_width-E2020_width/2, main_frame_length - E2020_width, main_frame_height-E2020_width*1.5] ] )   //增加一个安全门
-{
-
-  translate(i){
-  rotate([0,-90,0]){
-  color("red")
-  extrusion(E2020, 500-3*E2020_width, center = false);
-
-  }}
-}
-//下方横档
-for (i = 
-         [ [main_frame_width / 2-100-E2020_width-E2020_width/2+E2020_width, main_frame_length - E2020_width, E2040_width+10*E2020_width-E2020_width/2]] )   //增加一个安全门
-{
-
-  translate(i)
-  rotate([0,-90,0]){
-    color("orange")
-  extrusion(E2020, 500-E2020_width, center = false);}
-}
+ 
+ 
 
 ////框架外置物台
 for (i = [[200, -E2040_height - 500, E2040_width]
@@ -301,7 +261,9 @@ translate([-v_plate_width / 2 - connector_thickness_3 - E2040_width - connector_
 ////立柱框架-立柱-后方四个滑块-立柱附加的两个滑块-附加L型支架-结束
 
 //主体框架-立柱-四根支撑住-T型固定-上方
-for (i = [[main_frame_width / 2, E2020_width / 2 + 2, main_frame_height], [main_frame_width / 2, main_frame_length - 3 * E2020_width / 2 - 2, main_frame_height]]) {
+for (i = [[main_frame_width / 2, E2020_width / 2 + 2, main_frame_height], [200, main_frame_length - 3 * E2020_width / 2 - 2, main_frame_height]
+,[main_frame_width -200, main_frame_length - 3 * E2020_width / 2 - 2, main_frame_height]
+]) {
   translate(i) {
 
     rotate([0, 180, 0]) {
@@ -323,7 +285,10 @@ for (i = [[E2020_width / 2 + 2, main_frame_length / 2 - 300, main_frame_height]
   }
 }
 //主体框架-立柱-四根支撑住-T型固定-下方
-for (i = [[main_frame_width / 2, E2020_width / 2 + 2, 0], [main_frame_width / 2, main_frame_length - 3 * E2020_width / 2 - 2, 0]]) {
+for (i = [[main_frame_width / 2, E2020_width / 2 + 2, 0], [main_frame_width -200, main_frame_length - 3 * E2020_width / 2 - 2, 0],
+
+[200, main_frame_length - 3 * E2020_width / 2 - 2, 0]
+]) {
   translate(i) {
 
     joint_plate_2020T_T();
@@ -401,11 +366,11 @@ for (i = [[0, 0, 0]])
         }
       }
     }
-    translate([10, main_frame_length - E2020_width / 2, 0]) {
+    translate([0, main_frame_length - E2020_width / 2, 0]) {
       rotate([0, 90, 0]) {
         translate([-E2020_width / 2, 0, E2020_width / 2]) {
           color("grey") {
-            extrusion(E2040, main_frame_width - 2 * E2040_width - 20, center = false);
+            extrusion(E2040, main_frame_width - 2 * E2040_width, center = false);
           }
         }
       }
@@ -620,7 +585,7 @@ translate([1, 0, E2020_width / 2]) {
 
 //左侧外置遮雨板-内嵌5毫米
 translate([-v_plate_width / 2 - connector_thickness_3 - 2 - E2020_width - E2020_width, E2020_width / 2, 0]) {
-  color("black", alpha = 0.6) {
+  color("red", alpha = 0.6) {
     translate([0,-5,0]){
     cube([2, main_frame_length - 2 * E2020_width+10, main_frame_height - 15 * E2020_width]);}
   }
@@ -641,7 +606,7 @@ rotate([0,90,0]){
 
 translate([-v_plate_width / 2 - connector_thickness_3 - 2 - E2020_width - E2020_width, E2020_width / 2, main_frame_height - 15 * E2020_width + 2]) {
   rotate([0, 90, 0]) {
-    color("grey", alpha = 0.6) {
+    color("green", alpha = 0.6) {
       cube([2, main_frame_length - 2 * E2020_width, v_plate_width / 2 + connector_thickness_3 + 2 + E2020_width + E2020_width / 2]);
     }
   }
@@ -929,17 +894,17 @@ module dome_half_cover()
   }
 
   //顶部盖子-左侧4-纵向杆的互锁机构
-  translate([main_frame_width / 2 - E2020_width, -2 * v_plate_thickness - 2 * E2020_width, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
+  translate([main_frame_width / 2 - E2020_width-5, -2 * v_plate_thickness - 1 * E2020_width, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
     rotate([-90, 0, 0]) {
-      extrusion(E2020, main_frame_length + 4 * E2020_width + 2 * v_plate_thickness, center = false);
+      extrusion(E2020, main_frame_length + 2 * E2020_width + 2 * v_plate_thickness, center = false);
     }
   }
 
 
 //竖杆挡水片
-            translate([main_frame_width / 2 - 1.5 * E2020_width, -E2040_height - v_plate_thickness+E2020_width/2-E2020_width-2, main_frame_height]) {
+            translate([main_frame_width / 2 - 1.5 * E2020_width-5, -E2040_height - v_plate_thickness+E2020_width/2-E2020_width-2, main_frame_height]) {
         color("black",0.2) {
-          cube([2*E2020_width,2,41 * E2020_width]);
+          cube([2.5*E2020_width,2,41 * E2020_width]);
           // extrusion(E2020, 40 * E2020_width  , center = false);
 
         }
@@ -978,7 +943,7 @@ rotate([90,0,0]){
       //   color("red"){extrusion(E2020, 40* E2020_width  , center = false);
       //   }
       // }
-      translate([main_frame_width / 2 - 1 * E2020_width, -E2040_height - v_plate_thickness, main_frame_height]) {
+      translate([main_frame_width / 2 - 1 * E2020_width-5, -E2040_height - v_plate_thickness, main_frame_height]) {
         color("black") {
           extrusion(E2020, 40 * E2020_width  , center = false);
         }
@@ -1009,7 +974,7 @@ rotate([90,0,0]){
       }
       
       ////顶部盖子-左侧45度斜杆右侧的横杆
-      translate([main_frame_width / 2 - 6 * E2020_width - E2020_width / 2, -E2040_height - v_plate_thickness, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
+      translate([main_frame_width / 2 - 6 * E2020_width-2*(1-cos(45))*E2020_width, -E2040_height - v_plate_thickness, main_frame_height + E2020_width / 2 + 40 * E2020_width]) {
 
 import("extrusion_2020_cover_45.stl");
         // rotate([0, 90, 0]) {
@@ -1023,7 +988,7 @@ import("extrusion_2020_cover_45.stl");
       //顶部盖子-左侧-底部横向杆
       rotate([0, 90, 0]) {
         translate([-main_frame_height + E2020_width / 2, -E2040_height - v_plate_thickness, E2020_width / 2]) {
-          color("black") {
+          color("red") {
             extrusion(E2020, main_frame_width / 2 - E2020_width, center = false);
           }
         }
@@ -1036,7 +1001,7 @@ import("extrusion_2020_cover_45.stl");
   for (i = [[0, 0, 0], [0, main_frame_length + 3 * E2020_width + E2020_width / 2 + E2040_height + 2 * v_plate_thickness, 0]]) {
 
     translate(i) {
-      translate([main_frame_width / 2 - 1 * E2020_width, -E2020_width / 2 - E2040_height - v_plate_thickness, main_frame_height - E2020_width / 2]) {
+      translate([main_frame_width / 2 - 1 * E2020_width-5, -E2020_width / 2 - E2040_height - v_plate_thickness, main_frame_height - E2020_width / 2]) {
         color("orange") {
           rotate([90, 0, 0]) {
             extrusion(E2020, 1.5 * E2020_width  , center = false);
@@ -1053,7 +1018,7 @@ import("extrusion_2020_cover_45.stl");
 
 
 //顶部盖子-左侧4-纵向杆的互锁机构-L型装置
-  translate([main_frame_width / 2 - 3*E2020_width/2, -2 * v_plate_thickness - 2 * E2020_width-E2020_width/2, main_frame_height + E2020_width / 2 + 40.5 * E2020_width]) {
+  translate([main_frame_width / 2 - 3*E2020_width/2-5, -2 * v_plate_thickness - 2 * E2020_width-E2020_width/2, main_frame_height + E2020_width / 2 + 40.5 * E2020_width]) {
     rotate([0, 0, 0]) {
       color("grey"){
     cover_weatherboard(); 
@@ -1080,7 +1045,7 @@ import("extrusion_2020_cover_45.stl");
 
 
   //顶部盖子-右侧1-纵向杆的互锁机构—L型装置+增高器
-  translate([main_frame_width / 2 +E2020_width, -2 * v_plate_thickness - 2 * E2020_width, main_frame_height + E2020_width / 2 + 41 * E2020_width]) {
+  translate([main_frame_width / 2 +5, -2 * v_plate_thickness - 2 * E2020_width, main_frame_height + E2020_width / 2 + 41 * E2020_width]) {
     rotate([-90, 0, 0]) {
       color("yellow"){
       extrusion(E2020, main_frame_length + 4 * E2020_width + 2 * v_plate_thickness, center = false);}
@@ -1115,8 +1080,8 @@ import("extrusion_2020_cover_45.stl");
 
 //顶部遮雨L型（90度）结构
 module cover_weatherboard() {
-    cube([2 * E2020_width, main_frame_length + 5 * E2020_width + 2 * v_plate_thickness, 2]);
-    translate([2 * E2020_width, 0, 0]) {
+    cube([1 * E2020_width+5, main_frame_length + 5 * E2020_width + 2 * v_plate_thickness, 2]);
+    translate([ E2020_width+5, 0, 0]) {
         rotate([0, -90, 0]) {
             cube([E2020_width, main_frame_length + 5 * E2020_width + 2 * v_plate_thickness, 2]);
         }
@@ -1129,13 +1094,13 @@ module cover_weatherboard() {
 //顶部遮雨L型（135度）结构
 module cover_weatherboard_135(L_length) {
 
-    translate([ - 30, 0, 2]) {
+    translate([ - 30, 0, 6]) {
         rotate([ - 90, 0, 0]) {
             linear_extrude(height = L_length, center = false) {
 
                     square([30, 2]);
                     translate([30,0,0]){
-                        square([2, 20+2]);
+                        square([2, 20+6]);
                         }
              
 
@@ -1149,44 +1114,3 @@ module cover_weatherboard_135(L_length) {
 
     }
 }
-
-
-              
-
-
-
-/*bom
-E20*20==》35 *17.22
-主体框架
-1.5*2
-立柱
-10*1米
-门
-0.6*2+0.8*2
-升降器横杆
-1.5*2
-上盖
-1.5*4
-1.5*2
-0.8*4
-1*4
-0.5*2
-
-E2040==》8*25.75
-主体框架
-1.5*4
-升降器连接器
-0.25*4
-
-E2080==》3*55.79
-1.5*2
-
-
-V-slot滑杆==》12个*16
-6*2
-
-
-小计602+206+168+192=1168
-组装配件：预计600块
-
-*/
